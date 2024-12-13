@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Security Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Web Security Testing Tool</h1>
+    <form id="upload-form">
+        <label for="api-spec">Upload OpenAPI Spec:</label>
+        <input type="file" id="api-spec" name="api-spec" accept=".yaml,.json" required>
+        <button type="submit">Run Tests</button>
+    </form>
+    <div id="results">
+        <h2>Test Results</h2>
+        <pre id="output"></pre>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
