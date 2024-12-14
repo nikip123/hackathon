@@ -45,7 +45,9 @@ def run_tests():
     if checkbox2:
         xss_results = xss_test(page_url, api_spec)
         results["xss"] = xss_results
-    # session_results = run_session_tests()
+
+    if checkbox3:
+        # session_results = run_session_tests()
 
     print (results)
     return jsonify(results)
