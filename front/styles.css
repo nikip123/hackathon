@@ -1,0 +1,178 @@
+/* Body Styles */
+body {
+    background-image: url("image.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    animation: fadeIn 1s ease-in-out;
+    color: #333;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Container Styles */
+.container {
+    text-align: center;
+    max-width: 700px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.9);
+    animation: slideIn 1s ease-in-out;
+    min-height: 450px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Header Styles */
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    color: hsl(209, 41%, 16%);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Label Styles */
+label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+/* Input File Upload Styles */
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #303c7a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.custom-file-upload:hover {
+    background-color: #162743;
+    box-shadow: 0 0 15px 3px #5f73d4;
+}
+
+/* Button Styles */
+button {
+    width: 100%;
+    padding: 12px 25px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(90deg, #303c7a, #1a1e48);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #1a1e48, #303c7a);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* File Name Display */
+#file-name {
+    font-size: 1rem;
+    color: #333;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* Results Section */
+#results {
+    margin-top: 25px;
+    text-align: center;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Submit Button Specific Styles */
+#buttonsub {
+    font-size: 1rem;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Checkbox Styling */
+input[type="checkbox"] {
+    transform: scale(1.5);
+    accent-color: #303c7a;
+    margin-right: 10px;
+}
+
+fieldset {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+legend {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #303c7a;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Add Box Shadow for Interactive Elements */
+.custom-file-upload,
+button {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
