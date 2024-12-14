@@ -80,7 +80,7 @@ The project was created in order to prevent web application developers from crea
 1. Launch the backend server (see Backend Setup).
 2. Open the frontend in a browser (see Frontend Setup).
 3. Interact with the application through the user interface.
-##Warning!
+### Warning!
 Make sure you are working on a copy of your application - the project might affect your resources if it is not protected.
 
 ## Dependencies
