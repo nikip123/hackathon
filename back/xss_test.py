@@ -43,9 +43,7 @@ def xss_single_test(page_url, field, method, endpoint):
         return 1
 
 def xss_test(page_url, api_spec):
-    with open(api_spec, "r") as file:
-        openapi_spec = json.load(file)
-    input_fields_with_endpoints = find_input_fields_with_endpoints(openapi_spec)
+    input_fields_with_endpoints = find_input_fields_with_endpoints(api_spec)
     sum = 0
     i = 0
     result = []
