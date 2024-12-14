@@ -17,6 +17,7 @@ def find_input_fields_with_endpoints(openapi_spec):
                             input_fields_with_endpoints[i].append(field)
                             input_fields_with_endpoints[i].append({method.upper()})
                             input_fields_with_endpoints[i].append({path})
+                            i+=1
 
             if "parameters" in details:
                 for param in details["parameters"]:
@@ -25,6 +26,7 @@ def find_input_fields_with_endpoints(openapi_spec):
                         input_fields_with_endpoints[i].append(field)
                         input_fields_with_endpoints[i].append({method.upper()})
                         input_fields_with_endpoints[i].append({path})
+                        i+=1
 
     return input_fields_with_endpoints
 
