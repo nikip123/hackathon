@@ -1,31 +1,49 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS  # Import CORS
 from api_handler import parse_openapi
-from auth_tests import run_auth_tests
-from input_tests import run_input_tests
-from session_tests import run_session_tests
+from endpoints_testing import apiEndpoints
 
-app = Flask(__name__)
+# from input_tests import run_input_tests
+# from session_tests import run_session_tests
 
-@app.route('/run-tests', methods=['POST'])
+app = Flask(__name__, static_folder='../front')
+CORS(app, origins=["*"], methods=["GET", "POST", "OPTIONS"], allow_headers=["Content-Type", "Authorization"])
+
+
+@app.route("/")
+def serve_frontend():
+    return send_from_directory('../front', 'index.html')
+
+
+@app.route('/<path:filename>')
+def serve_static_files(filename):
+    return send_from_directory('../front', filename)
+
+
+@app.route('/run-tests/', methods=['POST'])
 def run_tests():
     if 'api-spec' not in request.files:
         return jsonify({"error": "No file provided"}), 400
 
     api_spec_file = request.files['api-spec']
+    print(f"Received file: {api_spec_file.filename}")
     api_spec = parse_openapi(api_spec_file)
 
+    page_url = "http://petstore.swagger.io/v2"
+
     # Run tests
-    auth_results = run_auth_tests(api_spec)
-    input_results = run_input_tests(api_spec)
-    session_results = run_session_tests()
+    end_results = apiEndpoints(page_url, api_spec)
+    # input_results = run_input_tests(api_spec)
+    # session_results = run_session_tests()
 
     # Combine results
     results = {
-        "authorization_tests": auth_results,
-        "input_validation_tests": input_results,
-        "session_tests": session_results,
+        "endpoints": end_results,
+        # "input_validation_tests": input_results,
+        # "session_tests": session_results,
     }
-    return jsonify(results)
+    return jsonify(end_results)
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
