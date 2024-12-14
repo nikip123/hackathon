@@ -6,14 +6,20 @@ import requests
 def apiEndpoints(page_url, api_spec):
     sum = 0
     i = 0
+    result = []
     print(i)
     paths = api_spec.get("paths", {})
     for path, _ in paths.items():
-        sum += endTest(page_url, path)
+        test = endTest(page_url, path)
+        if test == 0:
+            result.append(path)
+        sum += test
         i += 1
         print(i)
         print(sum)
-    return sum / i
+    result.insert(0, sum)
+    result.insert(0, sum/i)
+    return result
 
 
 # function to test endpoints in the URL
