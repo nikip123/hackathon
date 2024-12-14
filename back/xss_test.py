@@ -37,9 +37,9 @@ def xss_single_test(page_url, field, method, endpoint):
     payload = "<script>alert('XSS')</script>"
 
     if method == "POST":
-        response = requests.post(url,{field: payload})
+        response = requests.post(url, data={field: payload})
     else:
-        response = requests.get(url, {field: payload})
+        response = requests.get(url, params={field: payload})
 
     if payload in response.text:
         return 0
