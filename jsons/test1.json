@@ -1,0 +1,163 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Pets API",
+    "version": "1.0.0",
+    "description": "API to manage pets (CRUD operations)"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "summary": "Get a list of pets",
+        "operationId": "getPets",
+        "responses": {
+          "200": {
+            "description": "A list of pets",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "name": "Fluffy",
+                    "species": "Cat"
+                  },
+                  {
+                    "id": 2,
+                    "name": "Rex",
+                    "species": "Dog"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new pet",
+        "operationId": "createPet",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "name": "Bella",
+                "species": "Rabbit"
+              },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "species": {
+                    "type": "string"
+                  }
+                },
+                "required": ["name", "species"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pet created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 3,
+                  "name": "Bella",
+                  "species": "Rabbit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data provided"
+          }
+        }
+      }
+    },
+    "/pets/{pet_id}": {
+      "get": {
+        "summary": "Get a specific pet by ID",
+        "operationId": "getPet",
+        "parameters": [
+          {
+            "name": "pet_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific pet",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "name": "Fluffy",
+                  "species": "Cat"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a pet by ID",
+        "operationId": "deletePet",
+        "parameters": [
+          {
+            "name": "pet_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pet deleted successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Pet with ID 1 deleted successfully"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "species": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

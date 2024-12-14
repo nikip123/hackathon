@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Security Tool</title>
+    <title>Hackathon Security Tester</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Web Security Testing Tool</h1>
-    <form id="upload-form">
-        <label for="api-spec">Upload OpenAPI Spec:</label>
-        <input type="file" id="api-spec" name="api-spec" accept=".yaml,.json" required>
-        <button type="submit">Run Tests</button>
-    </form>
-    <div id="results">
-        <h2>Test Results</h2>
-        <pre id="output"></pre>
+    <div class="container">
+        <header>
+            <h1>Web Security Testing Tool</h1>
+        </header>
+
+        <div class="main">
+            <form id="upload-form">
+                <label for="api-spec" class="custom-file-upload">
+                    Choose File
+                </label>
+                <input type="file" id="api-spec" name="api-spec" />
+                <span id="file-name">No file chosen</span>
+                <button id="buttonsub" type="submit">RUN TESTS</button>
+            </form>
+            <div id="results">
+                <h2>Test Results:</h2>
+                <pre id="output">No results yet. Upload a file to start testing.</pre>
+            </div>
+        </div>
     </div>
     <script src="app.js"></script>
 </body>
