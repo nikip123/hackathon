@@ -6,7 +6,7 @@ def apiEndpoints(page_url, api_spec):
     sum = 0
     i = 0
     paths = api_spec.get("paths", {})
-    for path, methods in paths.items():
+    for path in paths.items():
         sum += endTest(page_url, path)
         i += 1
     return sum/i
