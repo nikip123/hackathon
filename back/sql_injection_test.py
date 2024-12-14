@@ -57,32 +57,30 @@ def blind_sql_test_single(page_url, field , method, endpoint):
         return 1    #protected
 
 #loop for testing sql injection resistance
-#returns 2 lists in such configuration: [percentage of immunity to hacking, number of vulnerable parameters, names of vulnerable parameters]
-#first list is for sql injection, second for blind sql injection
-def sql_injection_test(page_url, api_spec):
+#returns list in such configuration: [percentage of immunity to hacking, number of vulnerable parameters, names of vulnerable parameters]
+#if which is even, sql injection is testes, blind sql injection otherwise
+def sql_injection_test(page_url, api_spec, which):
     input_fields_with_endpoints = xss_test.find_input_fields_with_endpoints(api_spec)
     i = 0
     result = []
-    sum_injection = 0
-    sum_blind = 0
-    wrong_parameters_injection = []
-    wrong_parameters_blind = []
+    sum = 0
+    results = []
     for details in input_fields_with_endpoints.values():
         field = details[0]
         method = details[1]
         endpoint = details[2]
-        test = sql_injection_test_single(page_url, field, method, endpoint)
-        if test == 0:
-            sum_injection += 1
-            wrong_parameters_injection.append(field)
-        test = blind_sql_test_single(page_url, field, method, endpoint)
-        if test == 0:
-            sum_blind += 1
-            wrong_parameters_blind.append(field)
-        i += 1
-    wrong_parameters_injection.insert(0, sum_injection)
-    wrong_parameters_blind.insert(0, sum_blind)
-    wrong_parameters_injection.insert(0, sum_injection/i)
-    wrong_parameters_blind.insert(0, sum_blind/i)
+        if which % 2 == 0:
+            test = sql_injection_test_single(page_url, field, method, endpoint)
+            if test == 0:
+                sum += 1
+                results.append(field)
+        else:
+            test = blind_sql_test_single(page_url, field, method, endpoint)
+            if test == 0:
+                sum += 1
+                results.append(field)
+            i += 1
+    results.insert(0, sum)
+    results.insert(0, sum/i)
 
-    return json.dumps([wrong_parameters_injection, wrong_parameters_blind])
+    return json.dumps(results)
