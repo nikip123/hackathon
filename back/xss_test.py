@@ -5,7 +5,7 @@ import requests
 
 def find_input_fields_with_endpoints(openapi_spec):
     input_fields_with_endpoints = {}
-
+    i = 0
     for path, methods in openapi_spec.get("paths", {}).items():
         for method, details in methods.items():
             if "requestBody" in details:
@@ -14,17 +14,17 @@ def find_input_fields_with_endpoints(openapi_spec):
                     schema = media_details.get("schema", {})
                     if "properties" in schema:
                         for field in schema["properties"].keys():
-                            input_fields_with_endpoints[field] = []
-                            input_fields_with_endpoints[field].append({method.upper()})
-                            input_fields_with_endpoints[field].append({path})
+                            input_fields_with_endpoints[i].append(field)
+                            input_fields_with_endpoints[i].append({method.upper()})
+                            input_fields_with_endpoints[i].append({path})
 
             if "parameters" in details:
                 for param in details["parameters"]:
                     if param["in"] in ["query", "path", "header"]:
                         field = param["name"]
-                        input_fields_with_endpoints[field] = []
-                        input_fields_with_endpoints[field].append({method.upper()})
-                        input_fields_with_endpoints[field].append({path})
+                        input_fields_with_endpoints[i].append(field)
+                        input_fields_with_endpoints[i].append({method.upper()})
+                        input_fields_with_endpoints[i].append({path})
 
     return input_fields_with_endpoints
 
@@ -47,7 +47,7 @@ def xss_test(page_url, api_spec):
     sum = 0
     i = 0
     result = []
-    for field, method, endpoint in input_fields_with_endpoints.items():
+    for field, method, endpoint in input_fields_with_endpoints.values():
         test = xss_single_test(page_url, field, method, endpoint)
         if test == 0:
             sum += 1
