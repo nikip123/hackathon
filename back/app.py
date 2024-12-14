@@ -27,25 +27,28 @@ def run_tests():
         return jsonify({"error": "No file provided"}), 400
 
     api_spec_file = request.files['api-spec']
+    checkbox1 = request.form.get('checkbox1', 'false') == 'true'
+    checkbox2 = request.form.get('checkbox2', 'false') == 'true'
+    checkbox3 = request.form.get('checkbox3', 'false') == 'true'
+
     print(f"Received file: {api_spec_file.filename}")
     api_spec = parse_openapi(api_spec_file)
 
-    page_url = "http://petstore.swagger.io/v2"
+    #page_url = "http://petstore.swagger.io/v2"
+    page_url = "http://localhost:8000/"
 
     # Run tests
-    end_results = apiEndpoints(page_url, api_spec)
-    xss_results = xss_test(page_url, api_spec)
+    if checkbox1:
+        end_results = apiEndpoints(page_url, api_spec)
+        results["endpoints"] = end_results
+
+    if checkbox2:
+        xss_results = xss_test(page_url, api_spec)
+        results["xss"] = xss_results
     # session_results = run_session_tests()
 
-    # Combine results
-    results = {
-        "endpoints": end_results,
-        "xss": xss_results
-        # "input_validation_tests": input_results,
-        # "session_tests": session_results,
-    }
     print (results)
-    return jsonify(end_results)
+    return jsonify(results)
 
 
 if __name__ == '__main__':

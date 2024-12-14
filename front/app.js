@@ -14,6 +14,10 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const fileInput = document.getElementById('api-spec');
+    const checkbox1 = document.getElementById('checkbox1').checked; // true if checked, false otherwise
+    const checkbox2 = document.getElementById('checkbox2').checked;
+    const checkbox3 = document.getElementById('checkbox3').checked;
+
     const formData = new FormData();
     const outputElement = document.getElementById('output');
     const resultsElement = document.getElementById('results');
@@ -24,6 +28,9 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
     }
 
     formData.append('api-spec', fileInput.files[0]);
+    formData.append('checkbox1', checkbox1); // Add checkbox states to formData
+    formData.append('checkbox2', checkbox2);
+    formData.append('checkbox3', checkbox3);
 
     try {
         const response = await fetch('http://localhost:8080/run-tests/', {
