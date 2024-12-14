@@ -20,7 +20,6 @@ def serve_frontend():
 def serve_static_files(filename):
     return send_from_directory('../front', filename)
 
-
 @app.route('/run-tests/', methods=['POST'])
 def run_tests():
     if 'api-spec' not in request.files:
@@ -37,7 +36,7 @@ def run_tests():
     #page_url = "http://petstore.swagger.io/v2"
     page_url = "http://localhost:8000/"
 
-    # Run tests
+
     if checkbox1:
         end_results = apiEndpoints(page_url, api_spec)
         results["endpoints"] = end_results
