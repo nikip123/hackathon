@@ -3,6 +3,7 @@ from flask_cors import CORS  # Import CORS
 from api_handler import parse_openapi
 from endpoints_testing import apiEndpoints
 from xss_test import xss_test
+from sql_injection_test import sql_injection_test
 
 # from input_tests import run_input_tests
 # from session_tests import run_session_tests
@@ -34,9 +35,10 @@ def run_tests():
     print(f"Received file: {api_spec_file.filename}")
     api_spec = parse_openapi(api_spec_file)
 
-    #page_url = "http://petstore.swagger.io/v2"
-    page_url = "http://localhost:8000/"
+    page_url = "http://petstore.swagger.io/v2"
+    #page_url = "http://localhost:8000/"
 
+    results = {}
     # Run tests
     if checkbox1:
         end_results = apiEndpoints(page_url, api_spec)
@@ -47,7 +49,8 @@ def run_tests():
         results["xss"] = xss_results
 
     if checkbox3:
-        # session_results = run_session_tests()
+        sql_results = sql_injection_test(page_url, api_spec)
+        results["sql"] = sql_results
 
     print (results)
     return jsonify(results)
