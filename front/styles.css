@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    animation: fadeIn 1s ease-in-out; /* Animacja ładowania tła */
+    animation: fadeIn 1s ease-in-out; 
 }
 
 @keyframes fadeIn {
@@ -24,13 +24,13 @@ body {
 
 .container {
     text-align: center;
-    max-width: 600px; /* Zwiększona szerokość */
-    padding: 30px; /* Więcej miejsca wewnętrznego */
-    border-radius: 15px; /* Bardziej zaokrąglone rogi */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Głębszy cień */
-    background-color: rgba(255, 255, 255, 0.8); /* Lekkie zwiększenie krycia */
-    animation: slideIn 1s ease-in-out; /* Animacja wjazdu */
-    min-height: 400px; /* Minimalna wysokość */
+    max-width: 600px; 
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); 
+    background-color: rgba(255, 255, 255, 0.8); 
+    animation: slideIn 1s ease-in-out; 
+    min-height: 400px; 
 }
 
 @keyframes slideIn {
@@ -48,7 +48,7 @@ header h1 {
     font-size: 2rem;
     margin-bottom: 20px;
     color: hsl(209, 41%, 16%);
-    animation: pulse 2s infinite; /* Pulsujący efekt nagłówka */
+    animation: pulse 2s infinite; 
 }
 
 
@@ -60,7 +60,7 @@ label {
 }
 
 input {
-    display: none; /* Ukrycie domyślnego przycisku */
+    display: none; 
 }
 
 .custom-file-upload {
@@ -78,7 +78,7 @@ input {
 
 .custom-file-upload:hover {
     background-color: #162743;
-    box-shadow: 0 0 10px 2px #5f73d4; /* Efekt "Glow" na hover */
+    box-shadow: 0 0 10px 2px #5f73d4; 
 }
 
 button {
@@ -95,7 +95,7 @@ button {
 
 button:hover {
     background: linear-gradient(90deg, #1a1e48, #303c7a);
-    transform: translateY(-2px); /* Lekki efekt unoszenia */
+    transform: translateY(-2px); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
