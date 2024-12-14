@@ -12,9 +12,9 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const fileInput = document.getElementById('api-spec');
-    const checkbox1 = document.getElementById('checkbox1').checked; // true if checked, false otherwise
-    const checkbox2 = document.getElementById('checkbox2').checked;
-    const checkbox3 = document.getElementById('checkbox3').checked;
+    const checkbox1 = true //document.getElementById('checkbox1').checked; // true if checked, false otherwise
+    const checkbox2 = true//document.getElementById('checkbox2').checked;
+    const checkbox3 = true//document.getElementById('checkbox3').checked;
 
     const formData = new FormData();
     const resultsElement = document.getElementById('results');
