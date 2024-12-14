@@ -3,45 +3,55 @@
 import requests
 import time
 import json
+import xss_test
 
 #function testing if single input can be used for SQL injection
 #returns 0 when it's vulnerable and 1 otherwise
-def sql_injection_test_single(page_url, input_name, wrong_parameters_injection):
+def sql_injection_test_single(page_url, field, method, endpoint):
+    url = url = page_url+endpoint
     data = {
-        input_name: "' OR 1=1 --"
+        field: "' OR 1=1 --"
     }
-    response = requests.post(page_url, data=data)
+    if method == 'POST':
+        response = requests.post(url, data=data)
+    else:
+        response = requests.get(url, params=data)
 
-#status code should be 4xx and there should not be any information about sql synthax
+    #status code should be 4xx and there should not be any information about sql synthax
     if 499> response.status_code <399 or ("SQL" in response.text):
-        wrong_parameters_injection.append(input_name)
         return 0    #vulnerable
     else:
         return 1    #protected
 
 #function testing resistance to blind SQL injection
 #returns 0 when it's vulnerable and 1 otherwise
-def blind_sql_test_single(page_url, input_name, wrong_parameters_blind):
+def blind_sql_test_single(page_url, field , method, endpoint):
+    url = url = page_url+endpoint
     #test data
     payload_true = "' OR 1=1 --"
     payload_false = "' OR 1=2 --"
 
-    data_true = {input_name: payload_true}
-    data_false = {input_name: payload_false}
+    data_true = {field: payload_true}
+    data_false = {field: payload_false}
 
     #sending true request with measuring time
     start = time.time()
-    response_true = requests.post(page_url, data=data_true)
+    if(method == "POST"):
+        response_true = requests.post(page_url, data=data_true)
+    else:
+        response_true = requests.get(page_url, params=data_true)
     time_true = time.time() - start
 
     #sending false request with measuring time
     start = time.time()
-    response_false = requests.post(page_url, data=data_false)
+    if(method == "POST"):
+        response_false = requests.post(page_url, data=data_false)
+    else:
+        response_false = requests.get(page_url, params=data_false)
     time_false = time.time() - start
 
     #comparing true and false requests
     if response_true.text != response_false.text or time_true != time_false:
-        wrong_parameters_blind.append(input_name)
         return 0    #vulnerable
     else:
         return 1    #protected
@@ -50,26 +60,29 @@ def blind_sql_test_single(page_url, input_name, wrong_parameters_blind):
 #returns 2 lists in such configuration: [percentage of immunity to hacking, number of vulnerable parameters, names of vulnerable parameters]
 #first list is for sql injection, second for blind sql injection
 def sql_injection_test(page_url, api_spec):
+    input_fields_with_endpoints = xss_test.find_input_fields_with_endpoints(api_spec)
     i = 0
+    result = []
     sum_injection = 0
     sum_blind = 0
     wrong_parameters_injection = []
     wrong_parameters_blind = []
-    for path, methods in api_spec["paths"].items():
-        for method, details in methods.items():
-            request_body = (
-                details.get("requestBody", {})
-                .get("content", {})
-                .get("application/json", {})
-                .get("schema", {})
-                .get("properties", {})
-            )
-            for input_name in request_body.keys():
-                sum_injection += sql_injection_test_single(page_url, input_name, wrong_parameters_injection)
-                sum_blind += blind_sql_test_single(page_url, input_name, wrong_parameters_blind)
-                i += 1
-    wrong_parameters_injection.insert(0, sum_injection/i)
-    wrong_parameters_blind.insert(0, sum_blind/i)
+    for details in input_fields_with_endpoints.values():
+        field = details[0]
+        method = details[1]
+        endpoint = details[2]
+        test = sql_injection_test_single(page_url, field, method, endpoint)
+        if test == 0:
+            sum_injection += 1
+            wrong_parameters_injection.append(field)
+        test = blind_sql_test_single(page_url, field, method, endpoint)
+        if test == 0:
+            sum_blind += 1
+            wrong_parameters_blind.append(field)
+        i += 1
     wrong_parameters_injection.insert(0, sum_injection)
     wrong_parameters_blind.insert(0, sum_blind)
+    wrong_parameters_injection.insert(0, sum_injection/i)
+    wrong_parameters_blind.insert(0, sum_blind/i)
+
     return json.dumps([wrong_parameters_injection, wrong_parameters_blind])
