@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS  # Import CORS
 from api_handler import parse_openapi
 from endpoints_testing import apiEndpoints
+from xss_test import xss_test
 
 # from input_tests import run_input_tests
 # from session_tests import run_session_tests
@@ -33,15 +34,17 @@ def run_tests():
 
     # Run tests
     end_results = apiEndpoints(page_url, api_spec)
-    # input_results = run_input_tests(api_spec)
+    xss_results = xss_test(page_url, api_spec)
     # session_results = run_session_tests()
 
     # Combine results
     results = {
         "endpoints": end_results,
+        "xss": xss_results
         # "input_validation_tests": input_results,
         # "session_tests": session_results,
     }
+    print (results)
     return jsonify(end_results)
 
 
