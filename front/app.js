@@ -5,14 +5,13 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
     formData.append('api-spec', fileInput.files[0]);
 
     try {
-        const response = await fetch('http://localhost:5000/run-tests', {
+        const response = await fetch('http://localhost:8080/run-tests/', {
             method: 'POST',
             body: formData,
         });
 
         if (response.ok) {
-            const result = await response.json();
-            document.getElementById('output').textContent = JSON.stringify(result, null, 2);
+            document.getElementById('output').textContent = await response.json();
         } else {
             console.error("Failed to fetch data from backend:", response.statusText);
         }
