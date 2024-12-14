@@ -1,0 +1,126 @@
+body {
+    background-image: url("image.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    animation: fadeIn 1s ease-in-out; /* Animacja ładowania tła */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.container {
+    text-align: center;
+    max-width: 600px; /* Zwiększona szerokość */
+    padding: 30px; /* Więcej miejsca wewnętrznego */
+    border-radius: 15px; /* Bardziej zaokrąglone rogi */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Głębszy cień */
+    background-color: rgba(255, 255, 255, 0.8); /* Lekkie zwiększenie krycia */
+    animation: slideIn 1s ease-in-out; /* Animacja wjazdu */
+    min-height: 400px; /* Minimalna wysokość */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+header h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: hsl(209, 41%, 16%);
+    animation: pulse 2s infinite; /* Pulsujący efekt nagłówka */
+}
+
+
+label {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+input {
+    display: none; /* Ukrycie domyślnego przycisku */
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #303c7a;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.custom-file-upload:hover {
+    background-color: #162743;
+    box-shadow: 0 0 10px 2px #5f73d4; /* Efekt "Glow" na hover */
+}
+
+button {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background: linear-gradient(90deg, #303c7a, #1a1e48);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #1a1e48, #303c7a);
+    transform: translateY(-2px); /* Lekki efekt unoszenia */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#file-name {
+    font-size: 0.9rem;
+    color: #333;
+    display: block;
+    margin-bottom: 20px;
+}
+
+#results {
+    margin-top: 20px;
+    text-align: center;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#buttonsub {
+    font-size: 0.7rem;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
