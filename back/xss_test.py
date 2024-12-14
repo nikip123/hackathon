@@ -15,9 +15,9 @@ def find_input_fields_with_endpoints(openapi_spec):
                     if "properties" in schema:
                         for field in schema["properties"].keys():
                             input_fields_with_endpoints[i] = []
-                            input_fields_with_endpoints[i].append({field})
-                            input_fields_with_endpoints[i].append({method.upper()})
-                            input_fields_with_endpoints[i].append({path})
+                            input_fields_with_endpoints[i].append(field)
+                            input_fields_with_endpoints[i].append(method.upper())
+                            input_fields_with_endpoints[i].append(path)
                             i += 1
 
             if "parameters" in details:
@@ -25,15 +25,15 @@ def find_input_fields_with_endpoints(openapi_spec):
                     if param["in"] in ["query", "path", "header"]:
                         field = param["name"]
                         input_fields_with_endpoints[i] = []
-                        input_fields_with_endpoints[i].append({field})
-                        input_fields_with_endpoints[i].append({method.upper()})
-                        input_fields_with_endpoints[i].append({path})
+                        input_fields_with_endpoints[i].append(field)
+                        input_fields_with_endpoints[i].append(method.upper())
+                        input_fields_with_endpoints[i].append(path)
                         i += 1
 
     return input_fields_with_endpoints
 
 def xss_single_test(page_url, field, method, endpoint):
-    url = f"{page_url}{endpoint}"
+    url = page_url+endpoint
     payload = "<script>alert('XSS')</script>"
 
     if method == "POST":
