@@ -13,20 +13,42 @@
             <h1>Web Security Testing Tool</h1>
         </header>
 
-        <div class="main">
+        <main class="main">
             <form id="upload-form">
+                <!-- File Upload Section -->
                 <label for="api-spec" class="custom-file-upload">
                     Choose File
                 </label>
                 <input type="file" id="api-spec" name="api-spec" />
                 <span id="file-name">No file chosen</span>
+                
+                <!-- Test Options Section -->
+                <fieldset>
+                    <legend>Select Tests to Run:</legend>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox1" value="Path redirection" />
+                        <label for="checkbox1">Path Redirection</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox2" value="XSS attack" />
+                        <label for="checkbox2">XSS Attack</label>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="checkbox3" value="SQL injection" />
+                        <label for="checkbox3">SQL Injection</label>
+                    </div>
+                </fieldset>
+
+                <!-- Submit Button -->
                 <button id="buttonsub" type="submit">RUN TESTS</button>
             </form>
+
+            <!-- Results Section -->
             <div id="results">
                 <h2>Test Results:</h2>
                 <pre id="output">No results yet. Upload a file to start testing.</pre>
             </div>
-        </div>
+        </main>
     </div>
     <script src="app.js"></script>
 </body>

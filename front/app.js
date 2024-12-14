@@ -1,4 +1,3 @@
-
 document.getElementById('api-spec').addEventListener('change', (event) => {
     const fileNameElement = document.getElementById('file-name');
     const file = event.target.files[0];
@@ -9,14 +8,13 @@ document.getElementById('api-spec').addEventListener('change', (event) => {
     }
 });
 
-
 document.getElementById('upload-form').addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const fileInput = document.getElementById('api-spec');
     const formData = new FormData();
-    const outputElement = document.getElementById('output');
     const resultsElement = document.getElementById('results');
+    const outputElement = document.getElementById('output');
 
     if (fileInput.files.length === 0) {
         resultsElement.insertAdjacentHTML('beforeend', '<p class="error">Please select a file before submitting.</p>');
@@ -31,12 +29,11 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
             body: formData,
         });
 
-        resultsElement.querySelectorAll('p').forEach(p => p.remove()); 
+        resultsElement.querySelectorAll('p').forEach(p => p.remove());
 
         if (response.ok) {
             const result = await response.json();
-            outputElement.textContent = result.message || "Tests completed!";
-            resultsElement.insertAdjacentHTML('beforeend', '<p class="success">File was successfully submitted.</p>');
+            displayResults(result); // Function to display results
         } else {
             console.error("Failed to fetch data from backend:", response.statusText);
             resultsElement.insertAdjacentHTML('beforeend', '<p class="error">File submission failed. Please try again.</p>');
@@ -46,3 +43,21 @@ document.getElementById('upload-form').addEventListener('submit', async (e) => {
         resultsElement.insertAdjacentHTML('beforeend', '<p class="error">An error occurred while submitting the file.</p>');
     }
 });
+
+// Function to display results in the HTML
+function displayResults(result) {
+    const outputElement = document.getElementById('output');
+    outputElement.textContent = "Test Results:\n";
+
+    // Display endpoint results
+    outputElement.textContent += "\nEndpoints Tests:\n";
+    result.endpoints.forEach(endpoint => {
+        outputElement.textContent += `- ${endpoint.test}: ${endpoint.result}\n`;
+    });
+
+    // Display XSS results
+    outputElement.textContent += "\nXSS Tests:\n";
+    result.xss.forEach(xss => {
+        outputElement.textContent += `- ${xss.test}: ${xss.result}\n`;
+    });
+}

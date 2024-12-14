@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS  # Import CORS
 from api_handler import parse_openapi
 from endpoints_testing import apiEndpoints
+from xss_test import xss_test
 
 # from input_tests import run_input_tests
 # from session_tests import run_session_tests
@@ -19,7 +20,6 @@ def serve_frontend():
 def serve_static_files(filename):
     return send_from_directory('../front', filename)
 
-
 @app.route('/run-tests/', methods=['POST'])
 def run_tests():
     if 'api-spec' not in request.files:
@@ -33,17 +33,15 @@ def run_tests():
 
     # Run tests
     end_results = apiEndpoints(page_url, api_spec)
-    # input_results = run_input_tests(api_spec)
-    # session_results = run_session_tests()
+    xss_results = xss_test(page_url, api_spec)
 
     # Combine results
     results = {
         "endpoints": end_results,
-        # "input_validation_tests": input_results,
-        # "session_tests": session_results,
+        "xss": xss_results,
     }
-    return jsonify(end_results)
-
+    print(results)
+    return jsonify(results)
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)

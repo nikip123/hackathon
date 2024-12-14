@@ -14,30 +14,32 @@ def find_input_fields_with_endpoints(openapi_spec):
                     schema = media_details.get("schema", {})
                     if "properties" in schema:
                         for field in schema["properties"].keys():
+                            input_fields_with_endpoints[i] = []
                             input_fields_with_endpoints[i].append(field)
-                            input_fields_with_endpoints[i].append({method.upper()})
-                            input_fields_with_endpoints[i].append({path})
-                            i+=1
+                            input_fields_with_endpoints[i].append(method.upper())
+                            input_fields_with_endpoints[i].append(path)
+                            i += 1
 
             if "parameters" in details:
                 for param in details["parameters"]:
                     if param["in"] in ["query", "path", "header"]:
                         field = param["name"]
+                        input_fields_with_endpoints[i] = []
                         input_fields_with_endpoints[i].append(field)
-                        input_fields_with_endpoints[i].append({method.upper()})
-                        input_fields_with_endpoints[i].append({path})
-                        i+=1
+                        input_fields_with_endpoints[i].append(method.upper())
+                        input_fields_with_endpoints[i].append(path)
+                        i += 1
 
     return input_fields_with_endpoints
 
 def xss_single_test(page_url, field, method, endpoint):
-    url = f"{page_url}{endpoint}"
+    url = page_url+endpoint
     payload = "<script>alert('XSS')</script>"
 
     if method == "POST":
-        response = requests.post(url,{field: payload})
+        response = requests.post(url, data={field: payload})
     else:
-        response = requests.get(url, {field: payload})
+        response = requests.get(url, params={field: payload})
 
     if payload in response.text:
         return 0
@@ -49,7 +51,10 @@ def xss_test(page_url, api_spec):
     sum = 0
     i = 0
     result = []
-    for field, method, endpoint in input_fields_with_endpoints.values():
+    for details in input_fields_with_endpoints.values():
+        field = details[0]
+        method = details[1]
+        endpoint = details[2]
         test = xss_single_test(page_url, field, method, endpoint)
         if test == 0:
             sum += 1
